@@ -23,33 +23,31 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void FixedUpdate() {
+
+        GetComponent<Animator>().SetBool("IsWalking", false);
+
         if (Input.GetKey(KeyCode.W)) {
             GetComponent<Rigidbody2D>().AddForce(transform.up * 100);
             GetComponent<SpriteRenderer>().sprite = up;
         }
 
-        else if (Input.GetKey(KeyCode.S)) {
+        if (Input.GetKey(KeyCode.S)) {
             GetComponent<Rigidbody2D>().AddForce(transform.up * -100);
             GetComponent<SpriteRenderer>().sprite = down;
         } 
 
-        else if (Input.GetKey(KeyCode.D)) {
+        if (Input.GetKey(KeyCode.D)) {
             GetComponent<Rigidbody2D>().AddForce(transform.right * 100);
             GetComponent<SpriteRenderer>().flipX = true;
             GetComponent<Animator>().SetBool("IsWalking", true);
             GetComponent<SpriteRenderer>().sprite = right;
         }
 
-        else if (Input.GetKey(KeyCode.A)) {
+        if (Input.GetKey(KeyCode.A)) {
             GetComponent<Rigidbody2D>().AddForce(transform.right * -100);
             GetComponent<SpriteRenderer>().flipX = false;
             GetComponent<Animator>().SetBool("IsWalking", true);
             GetComponent<SpriteRenderer>().sprite = left;
         }
-
-        else {
-            GetComponent<Animator>().SetBool("IsWalking", false);
-        }
-
     }
 }
