@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1520642665040499730
+--- !u!1 &4129712502321386783
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,39 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2203602674588404901}
-  - component: {fileID: 5939948506279713706}
-  - component: {fileID: 4963489808382632947}
-  - component: {fileID: 9177575697483710322}
+  - component: {fileID: 3657207823032421800}
+  - component: {fileID: 9095908297428163239}
+  - component: {fileID: 7544686580288119550}
+  - component: {fileID: 5983185687331470975}
   m_Layer: 0
   m_Name: boulder
-  m_TagString: Untagged
+  m_TagString: Mineable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2203602674588404901
+--- !u!4 &3657207823032421800
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1520642665040499730}
+  m_GameObject: {fileID: 4129712502321386783}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.99, y: 0.71, z: 0}
+  m_LocalPosition: {x: 4.637, y: 1.963, z: 0}
   m_LocalScale: {x: 0.29, y: 0.29, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &5939948506279713706
+--- !u!212 &9095908297428163239
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1520642665040499730}
+  m_GameObject: {fileID: 4129712502321386783}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -72,8 +72,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1772690421
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4fff2167ed75176439711019370d7d08, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -86,13 +86,13 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &4963489808382632947
+--- !u!61 &7544686580288119550
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1520642665040499730}
+  m_GameObject: {fileID: 4129712502321386783}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -112,17 +112,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.09, y: 6.67}
   m_EdgeRadius: 0
---- !u!114 &9177575697483710322
+--- !u!114 &5983185687331470975
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1520642665040499730}
+  m_GameObject: {fileID: 4129712502321386783}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 871bda17871cd054b86899c3f866bf46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  stonePickupObject: {fileID: 85688767664279839, guid: 815d5b9ba5962f04da85d288bd344633, type: 3}
+  stonePickupObject: {fileID: 4633916839458983087, guid: 84e7e4fb7a555db4b9e7a572911dcb1e, type: 3}

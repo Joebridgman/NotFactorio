@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour {
 
-    public GameObject boulder;
+    public GameObject target;
+    public List<GameObject> mineables;
     public float laserCooldown = 0.5f;
 
     // Start is called before the first frame update
@@ -16,28 +17,41 @@ public class PlayerInteraction : MonoBehaviour {
     void Update() {
         
         laserCooldown -= Time.deltaTime;
-        
-        if (laserCooldown < 0) {
-            laserCooldown = 0;
-        }
 
-        if (Input.GetKey(KeyCode.Space) && laserCooldown == 0 && boulder != null) {
-            Mine();
-            laserCooldown = 0.5f;
+        if (mineables.Count != 0) {
+            target = mineables[0];
+
+            if (target != null) {
+                target.GetComponent<SpriteRenderer>().color = Color.green;
+            }
+
+            if (laserCooldown < 0) {
+                laserCooldown = 0;
+            }
+
+            if (Input.GetKey(KeyCode.Space) && laserCooldown == 0 && target != null) {
+                Mine();
+                laserCooldown = 0.5f;
+            }
         }
     }
 
     void Mine() {
-        if (boulder.GetComponent<Boulder>().health <= 0) {
-            boulder = null;
-        }
-        boulder.GetComponent<Boulder>().health -= 25;
-        Debug.Log("Boulder health: " + boulder.GetComponent<Boulder>().health);       
+        target.GetComponent<Mineable>().health -= 25;
+        Debug.Log("Mineable health: " + target.GetComponent<Mineable>().health);       
     }
 
     void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.tag == "Boulder") {
-            boulder = collision.gameObject;
+        if (collision.tag == "Mineable") {
+            mineables.Add(collision.gameObject);
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collision) {
+        if (collision.tag == "Mineable") {
+            target.GetComponent<SpriteRenderer>().color = Color.white;
+            target = null;
+            mineables.Remove(collision.gameObject);
         }
     }
 }

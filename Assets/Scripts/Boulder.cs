@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boulder : MonoBehaviour {
+public class Boulder : Mineable {
 
-    public int health = 100;
     public GameObject stonePickupObject;
-    public bool isInRange = false;
+
+    public Boulder() {
+        health = 100;
+    }
 
     // Start is called before the first frame update
     void Start() {
@@ -16,8 +18,8 @@ public class Boulder : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (health <= 0) {
-            Instantiate(stonePickupObject, transform);
-            Destroy(this);
+            Instantiate(stonePickupObject, gameObject.transform.position, new Quaternion());
+            Destroy(gameObject);
         }
     }
 }
