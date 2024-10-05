@@ -15,7 +15,9 @@ public class PlayerInteraction : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        
+
+        transform.parent.gameObject.GetComponent<Animator>().SetBool("IsMining", false);
+
         laserCooldown -= Time.deltaTime;
 
         if (mineables.Count != 0) {
@@ -32,6 +34,7 @@ public class PlayerInteraction : MonoBehaviour {
             if (Input.GetKey(KeyCode.Space) && laserCooldown == 0 && target != null) {
                 Mine();
                 laserCooldown = 0.5f;
+                transform.parent.gameObject.GetComponent<Animator>().SetBool("IsMining", true);
             }
         }
     }
