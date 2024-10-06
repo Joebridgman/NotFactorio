@@ -6,7 +6,7 @@ public class PlayerInteraction : MonoBehaviour {
 
     public GameObject target;
     public List<GameObject> mineables;
-    public float laserCooldown = 0.5f;
+    public float laserCooldown = 1.0f;
 
     // Start is called before the first frame update
     void Start() {
@@ -17,7 +17,6 @@ public class PlayerInteraction : MonoBehaviour {
     void Update() {
 
         transform.parent.gameObject.GetComponent<Animator>().SetBool("IsMining", false);
-
         laserCooldown -= Time.deltaTime;
 
         if (mineables.Count != 0) {
@@ -31,17 +30,23 @@ public class PlayerInteraction : MonoBehaviour {
                 laserCooldown = 0;
             }
 
-            if (Input.GetKey(KeyCode.Space) && laserCooldown == 0 && target != null) {
-                Mine();
-                laserCooldown = 0.5f;
+            if (Input.GetKey(KeyCode.Space) && target != null) {
+
+                if(!target.GetComponent<Boulder>().isParticlesOn) {
+                    target.GetComponent<Boulder>().particlesTarget = gameObject;
+                    target.GetComponent<Boulder>().turnOnParticles();
+                }
+                
                 transform.parent.gameObject.GetComponent<Animator>().SetBool("IsMining", true);
+
+                if(laserCooldown == 0) {
+                    target.GetComponent<Boulder>().Mine();
+                    laserCooldown = 1.0f;
+                }
+            } else {
+                target.GetComponent<Boulder>().turnOffParticles();
             }
         }
-    }
-
-    void Mine() {
-        target.GetComponent<Mineable>().health -= 25;
-        Debug.Log("Mineable health: " + target.GetComponent<Mineable>().health);       
     }
 
     void OnTriggerEnter2D(Collider2D collision) {
