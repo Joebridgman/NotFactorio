@@ -8,6 +8,7 @@ TagManager:
   - Boulder
   - Pickup
   - Mineable
+  - InventoryItem
   layers:
   - Default
   - TransparentFX

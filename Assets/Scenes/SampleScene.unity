@@ -185,6 +185,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventorySize: 20
+  slots: []
+  pickupQueue: []
+  queueCooldown: 0
 --- !u!1 &350521620
 GameObject:
   m_ObjectHideFlags: 0
