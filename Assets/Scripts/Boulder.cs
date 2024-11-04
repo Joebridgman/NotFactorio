@@ -6,14 +6,14 @@ using static UnityEngine.GraphicsBuffer;
 public class Boulder : Mineable {
 
     public GameObject stonePickupObject;
-    public GameObject healthBar;
     GameObject activeParticles;
     public GameObject particlesPrefab;
     public GameObject particlesTarget;
     public bool isParticlesOn = false;
 
     public Boulder() {
-        health = 100;
+        maxHealth = 100;
+        health = maxHealth;
     }
 
     // Start is called before the first frame update
@@ -24,33 +24,27 @@ public class Boulder : Mineable {
     // Update is called once per frame
     void Update() {
 
-        if(health < 100) {
-            healthBar.SetActive(true);
-        }
-
-        if(health <= 75 && health > 35) {
-            healthBar.GetComponent<SpriteRenderer>().color = Color.yellow;
-        } else if(health <= 35) {
-            healthBar.GetComponent<SpriteRenderer>().color = Color.red;
-        }
-
         if (health <= 0) {
-            Instantiate(stonePickupObject, gameObject.transform.position, new Quaternion());
+            int stoneDrops = Random.Range(5, 11);
+            List<GameObject> stones = new List<GameObject>();
+            for (int i = 0; i < stoneDrops; i++) {
+                stones.Add(Instantiate(stonePickupObject, gameObject.transform.position, new Quaternion()));
+            }
+            DropExplosion(stones);
             Destroy(activeParticles);
             isParticlesOn = false;
             Destroy(gameObject);
         }
 
         if(isParticlesOn) {
-            activeParticles.GetComponent<Particles>().particlesTarget = this.particlesTarget.transform.position
-                ;
+            activeParticles.GetComponent<Particles>().particlesTarget = this.particlesTarget.transform.position;
         }
     }
 
     public void Mine() {
         health -= 5;
-
-        healthBar.transform.localScale = new Vector3(4.25f * ((float)health / 100), healthBar.transform.localScale.y, healthBar.transform.localScale.z);
+        AdjustHealthBar();
+       
         Debug.Log("Mineable health: " + health);
     }
 
