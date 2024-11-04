@@ -5,61 +5,42 @@ using UnityEngine;
 public class PlayerInteraction : MonoBehaviour {
 
     public GameObject target;
-    public List<GameObject> mineables;
-    public float laserCooldown = 1.0f;
+    public float laserCooldown = 0.1f;
 
     // Start is called before the first frame update
     void Start() {
-
+        target = null;
     }
 
     // Update is called once per frame
     void Update() {
 
-        transform.parent.gameObject.GetComponent<Animator>().SetBool("IsMining", false);
+        transform.gameObject.GetComponent<Animator>().SetBool("IsMining", false);
         laserCooldown -= Time.deltaTime;
 
-        if (mineables.Count != 0) {
-            target = mineables[0];
-
-            if (target != null) {
-                target.GetComponent<SpriteRenderer>().color = Color.green;
-            }
+        if (target != null) {
 
             if (laserCooldown < 0) {
                 laserCooldown = 0;
             }
 
-            if (Input.GetKey(KeyCode.Space) && target != null) {
+            if (Input.GetMouseButton(0)) {
 
-                if(!target.GetComponent<Boulder>().isParticlesOn) {
+                if (!target.GetComponent<Boulder>().isParticlesOn) {
                     target.GetComponent<Boulder>().particlesTarget = gameObject;
                     target.GetComponent<Boulder>().turnOnParticles();
                 }
-                
-                transform.parent.gameObject.GetComponent<Animator>().SetBool("IsMining", true);
 
-                if(laserCooldown == 0) {
+                transform.gameObject.GetComponent<Animator>().SetBool("IsMining", true);
+
+                if (laserCooldown == 0) {
                     target.GetComponent<Boulder>().Mine();
-                    laserCooldown = 1.0f;
+                    laserCooldown = 0.1f;
                 }
-            } else {
+            }
+            else {
                 target.GetComponent<Boulder>().turnOffParticles();
             }
-        }
-    }
-
-    void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.tag == "Mineable") {
-            mineables.Add(collision.gameObject);
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D collision) {
-        if (collision.tag == "Mineable") {
-            target.GetComponent<SpriteRenderer>().color = Color.white;
-            target = null;
-            mineables.Remove(collision.gameObject);
         }
     }
 }

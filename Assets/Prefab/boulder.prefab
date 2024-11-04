@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3360219584759766461}
   - component: {fileID: 4048403976438916580}
   - component: {fileID: 257345238740679013}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: boulder
   m_TagString: Mineable
   m_Icon: {fileID: 0}
@@ -125,8 +125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 871bda17871cd054b86899c3f866bf46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stonePickupObject: {fileID: 4633916839458983087, guid: 84e7e4fb7a555db4b9e7a572911dcb1e, type: 3}
   healthBar: {fileID: 8993418359946401088}
+  stonePickupObject: {fileID: 4633916839458983087, guid: 84e7e4fb7a555db4b9e7a572911dcb1e, type: 3}
   particlesPrefab: {fileID: 2299187513727673882, guid: f7f241b147af21a47b6262fe44522e13, type: 3}
   particlesTarget: {fileID: 0}
   isParticlesOn: 0
@@ -140,7 +140,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8993418359946401089}
   - component: {fileID: 8993418359946401214}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}

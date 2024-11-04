@@ -97,4 +97,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0506ed2532af3a54c863d67802367315, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
+  displayName: Stone
   maxStack: 50
