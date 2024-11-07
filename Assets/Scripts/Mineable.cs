@@ -4,25 +4,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class Mineable : MonoBehaviour {
-    public int health { get; set; }
-    public int maxHealth { get; set; }
+public class Mineable : Interactable {
+    public int Health { get; set; }
+    public int MaxHealth { get; set; }
     public GameObject healthBar;
+    GameObject activeParticles;
+    public GameObject particlesPrefab;
+    public GameObject particlesTarget;
+    public bool isParticlesOn = false;
 
     public void AdjustHealthBar() {
-        if (health < maxHealth && health > maxHealth * 0.75) {
+        if (Health < MaxHealth && Health > MaxHealth * 0.75) {
             healthBar.GetComponent<SpriteRenderer>().color = Color.green;
         }
-        else if (health <= maxHealth * 0.75 && health > maxHealth * 0.35) {
+        else if (Health <= MaxHealth * 0.75 && Health > MaxHealth * 0.35) {
             healthBar.GetComponent<SpriteRenderer>().color = Color.yellow;
         }
-        else if (health <= maxHealth * 0.35) {
+        else if (Health <= MaxHealth * 0.35) {
             healthBar.GetComponent<SpriteRenderer>().color = Color.red;
         }
         else {
             healthBar.GetComponent<SpriteRenderer>().color = Color.clear;
         }
-        healthBar.transform.localScale = new Vector3(4.25f * ((float)health / maxHealth), healthBar.transform.localScale.y, healthBar.transform.localScale.z);
+        healthBar.transform.localScale = new Vector3(4.25f * ((float)Health / MaxHealth), healthBar.transform.localScale.y, healthBar.transform.localScale.z);
+
+        if (isParticlesOn) {
+            activeParticles.GetComponent<Particles>().particlesTarget = particlesTarget.transform.position;
+        }
     }
 
     public void DropExplosion(List<GameObject> drops) {
@@ -54,5 +62,23 @@ public class Mineable : MonoBehaviour {
         var player = GameObject.FindGameObjectWithTag("Player");
         player.GetComponent<PlayerInteraction>().target = null;
         gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+    }
+
+    public void turnOnParticles() {
+        isParticlesOn = true;
+        activeParticles = Instantiate(particlesPrefab, transform.position, Quaternion.identity);
+
+    }
+
+    public void turnOffParticles() {
+        isParticlesOn = false;
+        Destroy(activeParticles);
+    }
+
+    public void Mine() {
+        Health -= 5;
+        AdjustHealthBar();
+
+        Debug.Log("Mineable health: " + Health);
     }
 }

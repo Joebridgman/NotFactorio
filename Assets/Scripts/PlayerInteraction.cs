@@ -26,20 +26,18 @@ public class PlayerInteraction : MonoBehaviour {
 
             if (Input.GetMouseButton(0)) {
 
-                if (!target.GetComponent<Boulder>().isParticlesOn) {
-                    target.GetComponent<Boulder>().particlesTarget = gameObject;
-                    target.GetComponent<Boulder>().turnOnParticles();
-                }
-
                 transform.gameObject.GetComponent<Animator>().SetBool("IsMining", true);
-
                 if (laserCooldown == 0) {
-                    target.GetComponent<Boulder>().Mine();
-                    laserCooldown = 0.1f;
+                    if (!target.GetComponent<Mineable>().isParticlesOn) {
+                        target.GetComponent<Mineable>().particlesTarget = gameObject;
+                        target.GetComponent<Mineable>().turnOnParticles();
+                    }
+                    target.GetComponent<Mineable>().Mine();
+                    laserCooldown = 0.5f;
                 }
             }
             else {
-                target.GetComponent<Boulder>().turnOffParticles();
+                target.GetComponent<Mineable>().turnOffParticles();
             }
         }
     }

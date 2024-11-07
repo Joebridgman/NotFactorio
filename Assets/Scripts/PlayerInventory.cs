@@ -1,22 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Animations;
 
 public class PlayerInventory : MonoBehaviour {
 
     public int inventorySize;
-    public List<InventorySlot> slots;
+    public List<InventoryItem> slots;
     public List<GameObject> pickupQueue;
+    public Toolbar toolbar;
     public float queueCooldown = 0.1f;
     private bool isFull = false;
 
 
     // Start is called before the first frame update
     void Start() {
-        slots = new List<InventorySlot>();
+        slots = new List<InventoryItem>();
         for (int i = 0; i < inventorySize; i++) {
-            slots.Add(new InventorySlot(gameObject));
+            var emptyItem = gameObject.AddComponent<InventoryItem>();
+            slots.Add(emptyItem);
         }
     }
 
@@ -29,27 +32,26 @@ public class PlayerInventory : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D collision) {
-        var inventoryObject = collision.gameObject.GetComponent<Pickup>().inventoryObject;
-        var inventoryItem = inventoryObject.GetComponent<InventoryItem>();
-        var objectId = inventoryItem.id;
+        var inventoryItem = collision.gameObject.GetComponent<Pickup>().inventoryObject.GetComponent<InventoryItem>();
         if (collision.tag == "Pickup") {
-            foreach (InventorySlot slot in slots) {
-                if (slot.gameObject.tag != "InventoryItem") {
-                    slot.gameObject = inventoryObject;
-                    slot.amount = 1;
+            for (int i = 0; i < slots.Count; i++) {
+                if (slots[i].id == 0) {
+                    slots[i] = inventoryItem;
+                    slots[i].currentAmount = 1;
                     Destroy(collision.gameObject);
                     isFull = false;
 
-                    Debug.Log(slot.gameObject + " " + slot.amount);
+                    toolbar.UpdateSlots(slots[i], i);
+                    Debug.Log(slots[i] + " " + slots[i].currentAmount);
                     return;
                 }
-                else if (objectId == slot.gameObject.GetComponent<InventoryItem>().id) {
-                    if (slot.amount + 1 <= inventoryObject.GetComponent<InventoryItem>().maxStack) {
-                        slot.amount += 1;
+                else if (inventoryItem.id == slots[i].id) {
+                    if (slots[i].currentAmount + 1 <= slots[i].maxStack) {
+                        slots[i].currentAmount += 1;
                         Destroy(collision.gameObject);
                         isFull = false;
-
-                        Debug.Log(slot.gameObject + " " + slot.amount);
+                        toolbar.UpdateSlots(slots[i], i);
+                        Debug.Log(slots[i] + " " + slots[i].currentAmount);
                         return;
                     }
                 }
@@ -63,22 +65,5 @@ public class PlayerInventory : MonoBehaviour {
         if (collision.tag == "Pickup") {
             pickupQueue.Remove(collision.gameObject);
         }
-    }
-}
-
-public class InventorySlot {
-
-    public int amount { get; set; }
-    public GameObject gameObject { get; set; }
-
-    public InventorySlot(GameObject parent) { 
-        amount = 0;
-        gameObject = new GameObject("Empty slot");
-        gameObject.transform.parent = parent.transform;
-    }
-
-    public InventorySlot(GameObject gameObject, int amount) {
-        this.amount = amount;
-        this.gameObject = gameObject;
     }
 }

@@ -17,6 +17,7 @@ public class GenerateMap : MonoBehaviour {
     public Tile water;
     public int MapWidth = 10;
     public int MapHeight = 10;
+    public GameObject boulderObject;
 
     public float waterCoverage = 0.1f;
     public int waterSize = 1;
@@ -24,9 +25,10 @@ public class GenerateMap : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         InitialiseGrid();
+        SpawnResources();
     }
 
-    void InitialiseGrid() {
+    private void InitialiseGrid() {
 
         for (int x = 0; x < MapWidth; x++) {
             for (int y = 0; y < MapHeight; y++) {
@@ -89,4 +91,13 @@ public class GenerateMap : MonoBehaviour {
         return pos;
     }
 
+    private void SpawnResources() {
+        for (int i = 0; i < 5; i++) {
+            int spotX = Random.Range(-MapWidth + 1, MapWidth - 1);
+            int spotY = Random.Range(-MapHeight + 1, MapHeight - 1);
+
+            Instantiate(boulderObject, new Vector3(spotX/2, spotY/2, 0), new Quaternion());
+        }
+        
+    }
 }
