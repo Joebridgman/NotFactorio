@@ -92,7 +92,7 @@ public class GenerateMap : MonoBehaviour {
     }
 
     private void SpawnResources() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             int spotX = Random.Range(-MapWidth + 1, MapWidth - 1);
             int spotY = Random.Range(-MapHeight + 1, MapHeight - 1);
 

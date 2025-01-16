@@ -33,7 +33,7 @@ public class PlayerInteraction : MonoBehaviour {
                         target.GetComponent<Mineable>().turnOnParticles();
                     }
                     target.GetComponent<Mineable>().Mine();
-                    laserCooldown = 0.5f;
+                    laserCooldown = 0.1f;
                 }
             }
             else {
